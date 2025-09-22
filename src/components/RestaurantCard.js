@@ -1,7 +1,7 @@
 import {CDN_URL} from "../Utils/constants";
 const RestaurantCard = (props) => {
    const {resData} = props; // destructuring
-   const{name,cuisines,costForTwoString,cloudinaryImageId,avgRating} = resData?.data;
+   const{name,cuisines,costForTwoString,cloudinaryImageId,avgRating} = resData?.info;
     return (
         <div className="restaurant-card">
             

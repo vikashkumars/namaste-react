@@ -1,7 +1,7 @@
 const resList = [
      {
     "type": "restaurant",
-    "data": {
+    "info": {
       "type": "F",
       "id": "485392",
       "name": "La Pino'z Pizza",
@@ -138,7 +138,7 @@ const resList = [
   },
   {
     "type": "restaurant",
-    "data": {
+    "info": {
       "type": "F",
       "id": "177284",
       "name": "Sharma's Restaurent",
@@ -277,7 +277,7 @@ const resList = [
   },
   {
     "type": "restaurant",
-    "data": {
+    "info": {
       "type": "F",
       "id": "230209",
       "name": "Salt and Pepper",
@@ -421,7 +421,7 @@ const resList = [
   },
   {
     "type": "restaurant",
-    "data": {
+    "info": {
       "type": "F",
       "id": "451594",
       "name": "Madhuban Sweets.",
@@ -558,7 +558,7 @@ const resList = [
   },
   {
     "type": "restaurant",
-    "data": {
+    "info": {
       "type": "F",
       "id": "177290",
       "name": "Pizza Box",

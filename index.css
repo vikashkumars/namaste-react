@@ -45,3 +45,24 @@
 .filter-btn{
     margin: 10px;
 }
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.shimmer-card{
+    margin: 25px;
+    width: 200px;
+    height: 400px;
+    background-color: aqua;    
+}
+.login-btn{
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    border-radius: 1px;
+    cursor: pointer;
+    
+}
+.filter{
+    display: flex;
+}
