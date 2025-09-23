@@ -2,7 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-
+import { createBrowserRouter, RouterProvider,Outlet } from "react-router-dom";
+import About from "./components/About";
+import Contact from "./components/Contact";
+import Error from "./components/Error";
+import RestaurantMenu from "./components/RestaurantMenu";
 
 
 
@@ -23,17 +27,43 @@ const RestaurantCard = (props) => {
          </div> 
     );
 }  
-
-
 const AppLayout = () => {
     return (
         <div className="app">
             <Header />
-            <Body />
+            {/** if path = / <Body> */}
+            {/**if path =/about =/About */}
+            {/**if path =/contact-us =/Contact*/}
+            <Outlet />
         </div>
     );
 }
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);// react component calling
+const appRouter = createBrowserRouter([
+    {
+        path: "/",
+        element: <AppLayout />,
+        children : [
+                    {
+                    path: "/",
+                    element: <Body />
+                    },{
+                    path: "/about",
+                    element: <About />
+                    },{
+                    path :"/contact-us",
+                    element: <Contact />
+                },{
+                    path : "/restaurants/:resId",
+                    element: <RestaurantMenu />
+
+                }
+        ],
+        errorElement :<Error />
+    },
     
+]);
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+//root.render(<AppLayout />);// react component calling
+root.render(<RouterProvider router={appRouter} />);
  
