@@ -1,7 +1,7 @@
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import {Link} from "react-router-dom";
-import resList from "../Utils/mockData";
+import useOnlineStatus from "../Utils/useOnlineStatus";
 
 import Shimmer from "./Shimmer";
 const Body = () =>{
@@ -26,6 +26,10 @@ const Body = () =>{
         //Shimmer UI
         return <Shimmer />;
     } */
+   //Called custom hook
+   const onlineStatus = useOnlineStatus();
+    if(onlineStatus === false) return ( <h1>🔴 Offline, Please check your internet connection!!</h1>);
+
    //conditional rendering
     return listOfRestaurants.length=== 0?(<Shimmer/>) : (
         <div className="body">  
