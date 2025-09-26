@@ -33,12 +33,13 @@ const Body = () =>{
    //conditional rendering
     return listOfRestaurants.length=== 0?(<Shimmer/>) : (
         <div className="body">  
-            <div className="filter">
-                <div className="search-container">
-                    <input type="text" className="search-box" value={searchText} onChange={(event) =>{
+            <div className=" fliter flex">
+                <div className="search m-4 p-4 flex items-center">
+                    <input type="text" className="border border-solid border-black" value={searchText} onChange={(event) =>{
                         setSearchText(event.target.value);
                     }} placeholder="Search" />
-                    <button className="search-btn" onClick={()=>{
+                    
+                    <button className="px-4 py-2 bg-green-100 m-2 rounded-lg" onClick={()=>{
                         //filter the restaurant cards and update the UI
                         //serchText
                         const data = listOfRestaurants.filter(
@@ -48,13 +49,16 @@ const Body = () =>{
                         setFilteredRes(data);
                     }}> Search </button>
                 </div>
-                <button className="filter-btn" onClick={()=>{
+                <div className="search m-4 p-4">
+<                   button className="px-2 py-2 bg-green-200 m-2 rounded-lg" onClick={()=>{
                    const filteredRestaurants = listOfRestaurants.filter((res) => res.info.avgRating > 4.5);
                    console.log(filteredRestaurants);
                     setFilteredRes(filteredRestaurants);
                 }}> Top Rated Restaurant </button>
+                </div>
+                
             </div>
-            <div className="restaurant-container">
+            <div className="restaurant-container  flex flex-wrap">
                 
                 {
                     filteredRest.map((restaurant) => (
