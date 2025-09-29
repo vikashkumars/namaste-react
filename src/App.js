@@ -1,4 +1,4 @@
-import React,{lazy, Suspense} from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -7,7 +7,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
-
+import userContext from "./Utils/userContext";
 
 //Chunking
 //Code of splitting
@@ -17,7 +17,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 /**
  * Lazy is called from react and () callback function is called which will import the component
  */
-const Grocery = lazy(()=> import("./components/Grocery"));
+const Grocery = lazy(() => import("./components/Grocery"));
 
 const RestaurantCard = (props) => {
   const { resData } = props; // destructuring
@@ -40,14 +40,35 @@ const RestaurantCard = (props) => {
   );
 };
 const AppLayout = () => {
+  //Authentication
+  const [userName, setUserName] = useState("");
+  useEffect(() => {
+    //Api call
+    const data = {
+      name: "Vikash",
+    };
+    setUserName(data.name);
+  }, []);
   return (
-    <div className="app">
-      <Header />
-      {/** if path = / <Body> */}
-      {/**if path =/about =/About */}
-      {/**if path =/contact-us =/Contact*/}
-      <Outlet />
-    </div>
+   // {/**We have wrapped the whole app for the updated userName
+   //  so default value will be overidden */}
+   //if we want to fix the scope to only header component 
+   // then updated username will visible 
+   //Outside userContext has default value
+    <userContext.Provider value={{ loggedInUser: userName,setUserName }}>
+      {/** userContext has Vikash value*/}
+      <div className="app">
+         <userContext.Provider value={{ loggedInUser: "Arvika" }}>
+          {/** userContext has Arvika value*/}
+            <Header />
+         </userContext.Provider>
+                  
+        {/** if path = / <Body> */}
+        {/**if path =/about =/About */}
+        {/**if path =/contact-us =/Contact*/}
+        <Outlet />
+      </div>
+    </userContext.Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -70,7 +91,11 @@ const appRouter = createBrowserRouter([
       ,
       {
         path: "/grocery",
-        element: <Suspense fallback={<h1>loading...</h1>}><Grocery /></Suspense>
+        element: (
+          <Suspense fallback={<h1>loading...</h1>}>
+            <Grocery />
+          </Suspense>
+        ),
       },
       {
         path: "/restaurants/:resId",

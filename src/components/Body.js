@@ -1,7 +1,8 @@
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard ,{withPromotedLabel} from "./RestaurantCard";
+import { useState, useEffect,useContext } from "react";
 import {Link} from "react-router-dom";
 import useOnlineStatus from "../Utils/useOnlineStatus";
+import userContext from "../Utils/userContext";
 
 import Shimmer from "./Shimmer";
 const Body = () =>{
@@ -10,6 +11,7 @@ const Body = () =>{
     const [listOfRestaurants,setListOfRestaurants] = useState([]);
     const [filteredRest, setFilteredRes] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
     //normal js variable
     //useEffect -> side effect -> data fetching, api call(Call after the comonent is rendered in the dom)
     useEffect( () => {
@@ -18,7 +20,7 @@ const Body = () =>{
     const fetchData = async() =>{
         const data  = await fetch("https://pastebin.com/raw/0QcdEDBL" );
         const json = await data.json();
-       
+        console.log(json);
         setListOfRestaurants(json.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setFilteredRes(json.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
@@ -29,7 +31,9 @@ const Body = () =>{
    //Called custom hook
    const onlineStatus = useOnlineStatus();
     if(onlineStatus === false) return ( <h1>🔴 Offline, Please check your internet connection!!</h1>);
-
+    //--set the user name for the logged in user
+    //  so whatever we type in the input it will print--
+    const {loggedInUser,setUserName} =useContext(userContext);
    //conditional rendering
     return listOfRestaurants.length=== 0?(<Shimmer/>) : (
         <div className="body">  
@@ -45,7 +49,7 @@ const Body = () =>{
                         const data = listOfRestaurants.filter(
                             (res) => res?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase()));
                             
-                        console.log(data);
+                        //console.log(data);
                         setFilteredRes(data);
                     }}> Search </button>
                 </div>
@@ -56,13 +60,23 @@ const Body = () =>{
                     setFilteredRes(filteredRestaurants);
                 }}> Top Rated Restaurant </button>
                 </div>
-                
+                <div className="search m-4 p-4">
+                    <label>UserName:</label>
+                    <input className="border border-black p-2" value={loggedInUser} 
+                    onChange={(e)=> setUserName(e.target.value)}/>
+                </div>
             </div>
             <div className="restaurant-container  flex flex-wrap">
                 
                 {
                     filteredRest.map((restaurant) => (
-                        <Link key={restaurant.info.id}  to={"/restaurants/"+restaurant.info.id}><RestaurantCard resData={restaurant} /></Link>
+                        <Link key={restaurant.info.id}  to={"/restaurants/"+restaurant.info.id}>
+                      {  /**If the restaurant is promoted label to it  */
+                      
+                        restaurant.info.avgRating ==4.3 ? <RestaurantCardPromoted resData={restaurant} /> :    
+                            <RestaurantCard resData={restaurant} />
+                    }
+                        </Link>
                     ))
                 }
               
