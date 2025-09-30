@@ -8,6 +8,9 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import userContext from "./Utils/userContext";
+import {Provider} from "react-redux"; 
+import appStore from "./Utils/appstore";
+import Cart from "./components/Cart";
 
 //Chunking
 //Code of splitting
@@ -55,13 +58,15 @@ const AppLayout = () => {
    //if we want to fix the scope to only header component 
    // then updated username will visible 
    //Outside userContext has default value
+   <Provider store={appStore}>
     <userContext.Provider value={{ loggedInUser: userName,setUserName }}>
       {/** userContext has Vikash value*/}
+      
       <div className="app">
-         <userContext.Provider value={{ loggedInUser: "Arvika" }}>
+         {/**<userContext.Provider value={{ loggedInUser: "Arvika" }}>*/}
           {/** userContext has Arvika value*/}
             <Header />
-         </userContext.Provider>
+         { /**</userContext.Provider>*/}
                   
         {/** if path = / <Body> */}
         {/**if path =/about =/About */}
@@ -69,6 +74,7 @@ const AppLayout = () => {
         <Outlet />
       </div>
     </userContext.Provider>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -100,6 +106,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path : "/cart",
+        element : <Cart/>
       },
     ],
 
