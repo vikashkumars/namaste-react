@@ -13,7 +13,7 @@ const Header = () => {
   //Subcribing to the store using a Selection(its a hook)
   // it will subscribes the store cart items and whenever my cart items will modify it will modify here
   const cartItems =useSelector((store)=> store.cart.items);
-  console.log(cartItems);
+ //clear
   return (
     <div className="flex justify-between bg-pink-100 shadow-lg px-4 sm:bg-yellow-50 lg:bg-green-600 ">
       <div className="logo-container">

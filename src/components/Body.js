@@ -39,7 +39,7 @@ const Body = () =>{
         <div className="body">  
             <div className=" fliter flex">
                 <div className="search m-4 p-4 flex items-center">
-                    <input type="text" className="border border-solid border-black" value={searchText} onChange={(event) =>{
+                    <input type="text" data-testid="searchInput" className="border border-solid border-black" value={searchText} onChange={(event) =>{
                         setSearchText(event.target.value);
                     }} placeholder="Search" />
                     
